@@ -1,0 +1,20 @@
+
+.helloworld-label {
+    font-size: 36px;
+    color: #ffffff;
+    background-color: rgba(10,10,10,0.7);
+    border-radius: 5px;
+    padding: .5em;
+    height: 1080px;
+    /*width: 1px;*/
+}
+
+.hor-label {
+  font-size: 36px;
+    color: #ffffff;
+    background-color: rgba(10,10,10,0.7);
+    border-radius: 5px;
+    padding: .5em;
+    /*height: 1px;*/
+    width: 1900px;
+}
