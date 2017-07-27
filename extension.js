@@ -9,61 +9,23 @@ const Gdk = imports.gi.Gdk;
 
 
 let coord;
-let text, hor, button, x=0, y=0;
-
-function _hideHello() {
-  if (text){
-    Main.uiGroup.remove_actor(text);
-    text = null;
-  }
-    if (!text) {
-      text = new St.Label({ style_class: 'hor-label'});
-      Main.uiGroup.add_actor(text);
-  }
-    let monitor = Main.layoutManager.primaryMonitor;
-
-    text.set_position(monitor.x,
-                      monitor.y);
-
-    hGoing = function() { text.text = String(text.get_position()[1]); };
-
-
-    Tweener.addTween(text,
-                     { y: monitor.height,
-                       time: 5,
-                       transition: 'linear',
-                       onUpdate: hGoing,
-                       onComplete: _hideHello });
-    y+=1;
-}
+let ver, hor, button, x=0, y=0;
 
 function _showHello() {
 
-    if (!text) {
-        text = new St.Label({ style_class: 'helloworld-label'});
-        Main.uiGroup.add_actor(text);
+    if (!ver) {
+        ver = new St.Label({ style_class: 'helloworld-label'});
+        Main.uiGroup.add_actor(ver);
     }
-    if (x>1){
-      Main.uiGroup.remove_actor(text);
-      _hideHello();
-      return 0;
+    if (!hor) {
+        hor = new St.Label({ style_class: 'hor-label'});
+        Main.uiGroup.add_actor(hor);
     }
 
     let monitor = Main.layoutManager.primaryMonitor;
-
-    text.set_position(monitor.x,
-                      monitor.y);
-
-    fGoing = function() { text.text = String(text.get_position()[0]); };
-
-
-    Tweener.addTween(text,
-                     { x: monitor.width,
-                       time: 5,
-                       transition: 'linear',
-                       onUpdate: fGoing,
-                       onComplete: _showHello });
-    x+=1;
+    let [mouse_x, mouse_y, mask] = global.get_pointer();
+    ver.set_position(mouse_x, 0);
+    hor.set_position(0, mouse_y);
     //global.stage.connect('space-press-event', _hideHello())
 
 }
@@ -83,20 +45,14 @@ const CoordManager = new Lang.Class({
 
         this.actor.add_actor(this.label);
 
-        Mainloop.timeout_add(100, Lang.bind(this, this.update_label));
+        Mainloop.timeout_add(5, Lang.bind(this, this.update_label));
     },
 
     update_label: function() {
-      if(!text){
         let [mouse_x, mouse_y, mask] = global.get_pointer();
         let newLabel = "X: " + mouse_x + " Y: " + mouse_y;
         this.label.set_text(newLabel);
-      }
-      else{
-        let [mouse_x, mouse_y] = text.get_position();
-        let newLabel = "X: " + String(mouse_x) + " Y: " + String(mouse_y);
-        this.label.set_text(newLabel);
-      }
+        _showHello();
         return true;
     },
 
