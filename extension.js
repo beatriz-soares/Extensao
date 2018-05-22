@@ -24,8 +24,8 @@ function _showHello() {
 
     let monitor = Main.layoutManager.primaryMonitor;
     let [mouse_x, mouse_y, mask] = global.get_pointer();
-    ver.set_position(mouse_x, 0);
-    hor.set_position(0, mouse_y);
+    ver.set_position(mouse_x-15, 0);
+    hor.set_position(0, mouse_y-15);
     //global.stage.connect('space-press-event', _hideHello())
 
 }
